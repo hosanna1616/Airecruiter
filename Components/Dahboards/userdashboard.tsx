@@ -466,5 +466,106 @@ export default function Dashboard() {
                     <p className="text-xs text-gray-500">Experience Level</p>
                   </div>
                 </div>
+               {/* ACTION BUTTONS */}
+               <div className="space-y-3 mb-6">
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-full py-3 font-semibold">
+                    Apply now
+                  </Button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      variant="outline"
+                      className="border-red-400 text-red-500 hover:bg-red-50 rounded-full bg-transparent"
+                    >
+                      <Bookmark className="w-4 h-4 mr-2" />
+                      Save Job
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="border-red-400 text-red-500 hover:bg-red-50 rounded-full bg-transparent"
+                    >
+                      <Share2 className="w-4 h-4 mr-2" />
+                      Share Job
+                    </Button>
+                  </div>
+                </div>
+
+                {/* JOB DESCRIPTION */}
+                <div className="border-t border-gray-200 pt-6">
+                  <h3 className="text-lg font-bold text-black mb-3">Job Description</h3>
+                  <div className="text-sm text-gray-700 leading-relaxed space-y-3">
+                    {selectedJob.description.split("\n").map((line, idx) => (
+                      <p key={idx}>{line}</p>
+                    ))}
+                  </div>
+                </div>
+
+                {/* COMPANY PROFILE SECTION */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-black">{selectedJob.company}</p>
+                      <p className="text-xs text-gray-600">Jobs Posted: {selectedJob.jobsPosted} jobs</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      className="border-red-400 text-red-500 hover:bg-red-50 rounded-full text-sm bg-transparent"
+                    >
+                      See Company profile
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ======== APPLICATION STATUS SECTION (DESKTOP) ======== */}
+            <div className="hidden lg:block bg-white rounded-lg border border-gray-200 p-6">
+              <h2 className="text-lg font-bold text-black mb-4 flex items-center gap-2">
+                <CheckCircleIcon className="w-5 h-5 text-orange-500" />
+                Your Applications
+              </h2>
+
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {APPLICATIONS.map((app) => (
+                  <div key={app.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow">
+                    <div className="mb-2">
+                      <h3 className="text-sm font-bold text-black">{app.jobTitle}</h3>
+                      <p className="text-xs text-gray-600">{app.company}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">
+                        Applied {new Date(app.appliedDate).toLocaleDateString()}
+                      </span>
+                      <Badge className={`flex items-center gap-1 ${getStatusColor(app.status)}`}>
+                        {getStatusIcon(app.status)}
+                        <span className="capitalize text-xs">{app.status}</span>
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* STATS */}
+              <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-3 gap-3">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-orange-500">4</p>
+                  <p className="text-xs text-gray-600">Total Apps</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-green-500">1</p>
+                  <p className="text-xs text-gray-600">Accepted</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-blue-500">1</p>
+                  <p className="text-xs text-gray-600">Reviewing</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
  
