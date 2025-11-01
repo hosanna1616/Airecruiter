@@ -45,7 +45,7 @@ export function Footer() {
             <div className="relative w-full max-w-xs">
               {/* Robot Image with black theme */}
               <Image
-                src="/herorob.png"
+                src="/Aiimage.png"
                 alt="AI Robot Character"
                 width={300}
                 height={400}
