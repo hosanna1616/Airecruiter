@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useAuth } from "@/lib/auth-context"
 import { Badge } from "@/Components/ui/badge"
 import { Button } from "@/Components/ui/button"
 import { Card, CardContent } from "@/Components/ui/card"
@@ -19,6 +20,7 @@ import {
   Share2,
   Bookmark,
   ArrowLeft,
+  LogOut,
 } from "lucide-react"
 
 // ============================================================
@@ -194,8 +196,16 @@ const APPLICATIONS: Application[] = [
 // MAIN COMPONENT
 // ============================================================
 export default function Dashboard() {
+  const { user, logout } = useAuth()
   const [selectedJobId, setSelectedJobId] = useState<string>("1")
   const [searchQuery, setSearchQuery] = useState("")
+
+  const userInitials = user?.fullName
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US"
 
   // ============================================================
   // HELPER FUNCTIONS
@@ -252,14 +262,24 @@ export default function Dashboard() {
           </div>
 
           {/* PROFILE SECTION - TOP RIGHT */}
-          <div className="flex items-center gap-4 bg-white rounded-lg border border-gray-200 px-4 py-3">
-            <div className="text-right">
-              <p className="text-sm font-semibold text-black">John Doe</p>
-              <p className="text-xs text-gray-600">Job Seeker</p>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 bg-white rounded-lg border border-gray-200 px-4 py-3">
+              <div className="text-right">
+                <p className="text-sm font-semibold text-black">{user?.fullName || "User"}</p>
+                <p className="text-xs text-gray-600">Job Seeker</p>
+              </div>
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold">
+                {userInitials}
+              </div>
             </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold">
-              JD
-            </div>
+            <Button
+              onClick={logout}
+              variant="outline"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
           </div>
         </div>
       </div>

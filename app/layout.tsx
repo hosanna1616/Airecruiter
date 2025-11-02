@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Navbar } from "@/Components/Layout/Navbar"
 import { Footer } from "@/Components/Layout/Footer"
+import { AuthProviderWrapper } from "@/Components/Providers/AuthProviderWrapper"
 
 import "./globals.css"
 
@@ -23,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <AuthProviderWrapper>
+          <Navbar />
+          {children}
+          <Footer />
+        </AuthProviderWrapper>
       </body>
     </html>
   )

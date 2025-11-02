@@ -3,6 +3,8 @@
 import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/lib/auth-context"
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({
@@ -10,10 +12,13 @@ export default function SignupForm() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "user",
+    role: "user" as "user" | "company",
   })
 
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const { signup } = useAuth()
+  const router = useRouter()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -21,17 +26,47 @@ export default function SignupForm() {
       ...prev,
       [name]: value,
     }))
+    setError("") // Clear error when user types
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError("")
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!")
+      setError("Passwords do not match!")
       return
     }
+
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long!")
+      return
+    }
+
     setIsLoading(true)
-    console.log("Sign Up:", formData)
-    setTimeout(() => setIsLoading(false), 1000)
+    try {
+      const success = await signup(
+        formData.fullName,
+        formData.email,
+        formData.password,
+        formData.role
+      )
+
+      if (success) {
+        // Redirect based on role
+        if (formData.role === "user") {
+          router.push("/dashboard/user")
+        } else {
+          router.push("/dashboard/company")
+        }
+      } else {
+        setError("An account with this email already exists. Please sign in instead.")
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -43,6 +78,13 @@ export default function SignupForm() {
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Create Account</h1>
           <p className="text-gray-600 text-sm font-medium">Join us today and get started in minutes</p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">

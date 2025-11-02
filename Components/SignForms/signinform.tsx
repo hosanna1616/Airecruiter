@@ -3,6 +3,8 @@
 import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/lib/auth-context"
 
 export default function SigninForm() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,9 @@ export default function SigninForm() {
   })
 
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const { login } = useAuth()
+  const router = useRouter()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -18,13 +23,39 @@ export default function SigninForm() {
       ...prev,
       [name]: value,
     }))
+    setError("") // Clear error when user types
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError("")
     setIsLoading(true)
-    console.log("Sign In:", formData)
-    setTimeout(() => setIsLoading(false), 1000)
+
+    try {
+      const success = await login(formData.email, formData.password)
+
+      if (success) {
+        // Get user from localStorage to determine role
+        const storedUser = localStorage.getItem("user")
+        if (storedUser) {
+          const user = JSON.parse(storedUser)
+          // Redirect based on role
+          if (user.role === "user") {
+            router.push("/dashboard/user")
+          } else {
+            router.push("/dashboard/company")
+          }
+        } else {
+          setError("Failed to retrieve user information. Please try again.")
+        }
+      } else {
+        setError("Invalid email or password. Please try again.")
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -37,6 +68,13 @@ export default function SigninForm() {
             Sign in to your account to continue
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
