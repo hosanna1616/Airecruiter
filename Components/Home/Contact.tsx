@@ -25,14 +25,14 @@ export default function Contact() {
   }
 
   return (
-    <section className="relative w-full h-screen bg-white overflow-hidden">
-      <div className="absolute right-0 top-0 w-[30%] h-full bg-gradient-to-b from-[#FF9833] via-[#FF9833] to-[#FF8C1A]"></div>
+    <section className="relative w-full min-h-screen bg-white overflow-hidden">
+      <div className="absolute right-0 top-0 w-[30%] min-h-full h-full bg-gradient-to-b from-[#FF9833] via-[#FF9833] to-[#FF8C1A]"></div>
 
-      <div className="relative z-10 flex items-center h-full">
-        {/* LEFT: Text + Form - now 100% width */}
-        <div className="w-[150%] px-60 py-12 flex items-center">
-          <div className="w-full max-w-md">
-            <h1 className="text-5xl font-bold mb-4 leading-tight">
+      <div className="relative z-10 flex items-center min-h-screen py-12">
+        {/* LEFT: Text + Form - responsive */}
+        <div className="w-full md:w-[70%] lg:w-[60%] px-4 md:px-12 lg:px-24 xl:px-32 py-12 flex items-center">
+          <div className="w-full max-w-md mx-auto md:mx-0">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
               Get in <span className="text-[#FF9833]">Touch</span>
             </h1>
 
@@ -149,7 +149,7 @@ export default function Contact() {
         <img
           src="/contact.png"
           alt="Orange and black robot in business suit with headphones"
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 h-full w-auto object-contain drop-shadow-lg z-20 mr-12"
+          className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 h-full w-auto object-contain drop-shadow-lg z-20 mr-12"
         />
       </div>
     </section>

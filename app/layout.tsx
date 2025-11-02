@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Navbar } from "@/Components/Layout/Navbar"
+import { Footer } from "@/Components/Layout/Footer"
 
 import "./globals.css"
 
@@ -24,7 +25,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <Navbar />
         {children}
-        
+        <Footer />
       </body>
     </html>
   )

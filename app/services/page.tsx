@@ -1,11 +1,10 @@
-import Hero from "@/Components/Home/Hero"
 import Service from "@/Components/Home/Services"
 
-export default function HomePage() {
+export default function ServicesPage() {
   return (
     <main className="min-h-screen">
-      <Hero />
       <Service />
     </main>
   )
 }
+

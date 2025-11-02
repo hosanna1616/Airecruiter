@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
+import Link from "next/link"
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({
@@ -141,9 +142,9 @@ export default function SignupForm() {
         {/* Footer */}
         <p className="text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <a href="/signin" className="text-[#FF9833] hover:text-[#FF8C1A] font-semibold">
+          <Link href="/signin" className="text-[#FF9833] hover:text-[#FF8C1A] font-semibold">
             Sign In
-          </a>
+          </Link>
         </p>
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 
 export function Footer() {
   return (
@@ -28,18 +29,18 @@ export function Footer() {
 
           {/* Center Section - Quick Links (vertically centered) */}
           <div className="flex flex-col gap-2 items-center justify-center">
-            <a href="#" className="text-gray-300 hover:text-orange-500 transition-colors">
+            <Link href="/" className="text-gray-300 hover:text-orange-500 transition-colors">
               Home
-            </a>
-            <a href="#" className="text-gray-300 hover:text-orange-500 transition-colors">
+            </Link>
+            <Link href="/about" className="text-gray-300 hover:text-orange-500 transition-colors">
               About
-            </a>
-            <a href="#" className="text-gray-300 hover:text-orange-500 transition-colors">
+            </Link>
+            <Link href="/services" className="text-gray-300 hover:text-orange-500 transition-colors">
               Services
-            </a>
-            <a href="#" className="text-gray-300 hover:text-orange-500 transition-colors">
+            </Link>
+            <Link href="/contact" className="text-gray-300 hover:text-orange-500 transition-colors">
               Contact
-            </a>
+            </Link>
           </div>
 
           {/* Right Section - Robot Character */}
