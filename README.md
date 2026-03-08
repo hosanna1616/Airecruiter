@@ -1,6 +1,6 @@
 # Airecruiter 🚀
 
-![Project screenshot](./public/image.png)
+![Project screenshot](public/image.png)
 
 Airecruiter is a modern job recruitment platform built with Next.js and TypeScript. It streamlines the hiring process by providing features for job seekers and employers/government users, including AI-powered screening, profile management, and subscription handling. The application emphasizes security, performance, and a clean user interface.
 
